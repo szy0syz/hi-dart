@@ -1,0 +1,222 @@
+01.Dart: The Complete Developer's Guide
+   Making the most of this course
+   Introduction to Dart
+   Introduction to Dartpad
+
+05.Section Intro
+   The 'main' method
+   Hello world
+   Variable declaration and initialization
+   Basic types
+
+10.Exercise: printing variables
+   String Concatenation & Interpolation
+   Exercise: String interpolation
+   String Escaping
+   Multi-line strings
+
+15.Basic String operations: uppercase and lowercase
+   Initialization vs Assignment
+   Exercise: Lowercase and uppercase strings
+   Finding and replacing strings
+   Conversations between types
+
+20.Arithmetic operators
+   Exercise: temperature conversion
+   Increment & decrement operators
+   Logical & Relational operators
+   Ternary conditional operator
+
+25.Hex format, bitwise & shifting operators
+   Comments
+   Expressions & statements
+   Section Intro
+   Static vs Dynamic Languages
+
+30.Type inference with 'var'
+   The 'final' keyword
+   The 'const' keyword
+   Exercise: 'var', 'final' and 'const'
+   The 'dynamic' keyword
+
+35.Section Intro
+   If/else statements
+   Exercise: if/else statements
+   while loops
+   for loops
+
+40.Exercise: fizz buzz
+   'break' and 'continue'
+   switch statements
+   enumerations
+   Exercise: simple calculator
+
+45.Section Intro
+   Installing the Dart SDK
+   Installing and configuring VS Code
+   Project Brief: Rock, Paper & Scissors
+   Creating a command line app
+
+50.Pseudocode for the game logic
+   Getting use input with stdin from dart:io
+   Implementing the game loop
+   Implementing the game logic
+   Section Intro
+
+55.Lists
+   Exercise: Sum of the items in a list
+   List methods
+   Type annotations with lists
+   Using 'var', 'final', 'const' with lists
+
+60.Sets
+   Exercise: Sets
+   Maps
+   The 'as' operator
+   The 'null' value
+
+65.Iterating on maps
+   Exercise: Pizza Ordering
+   Nested Collections
+   Exercise: Restaurant ratings
+   Collection-if
+
+70.Collection-for
+   Spreads
+   Exercise: Shopping List
+   Copying collections
+   Section Intro
+
+75.Parsing command line arguments
+   Reading files line by line
+   Pseudocode for the processing logic
+   Implementing the processing logic
+   Introduction to Null Safety
+
+80.Nullable and non-nullable variables
+   Flow Analysis: Promotion and Definite Assignment
+   The assertion operator
+   The if-null operator
+   Null Safety with type inference
+
+85.Null Safety with collections
+   The conditional access operator & the billion dollar mistake
+   Section Intro
+   Intro to functions
+   Function arguments
+
+90.Return values
+   Exercise: Sum of a list of numbers
+   Named and positional arguments
+   Required and default values
+   Default positional arguments
+
+95.Exercise: Pizza ordering with functions
+   Fat arrow notations
+   The global and local scope
+   Inner Functions
+   Global mutable state and functions with side effects
+
+100.Section Intro
+   Anonymous functions
+   Functions as first class objects
+   Function types
+   Closures
+
+105.The 'forEach' method
+   The 'map' method
+   'Iterable' and 'toList()'
+   Code reuse with anonymous functions and generics
+   The 'where' and 'firstWhere' methods
+
+110.Exercise: Implement the 'where' function
+   Ecercise: Implement the 'firstWhere' function
+   The 'reduce' method
+   Combining functional operators
+   Section Intro
+
+115.Introduction to classes
+   Instance methods
+   Class constructors and the 'this' keyword
+   Initializer lists and the shorthand syntax
+   Classes with immutable members
+
+120.Exercise: Creating a 'Person' class
+   Type safety with classes
+   'const' constructors
+   Named constructors
+   Named constructors: temperature example
+
+125.Getters and setters
+   Exercise: Restaurant ratings with classes
+   Static methods and variables
+   Private variables and methods
+   Wrap up
+
+130.Section Intro
+   VS Code Dart Setup with Null Safety
+   Introduction to inheritance/subclassing
+   The 'super' constructor
+   Overriding methods
+
+135.Abstract classes
+   Exercise: Area and Perimeter
+   Interfaces and the difference between 'implements' and 'extends'
+   The base 'Object' class
+   The 'toString()' method
+
+140.The equality operator and the 'covariant' keyword
+   Exercise: Implement the + and * operators
+   Overriding 'hashCode' and the Equatable package
+   Using classes with generics
+   Composition vs inheritance: Flutter widget hierarchy example
+
+145.Factory constructors and reading JSON data
+   Exercise: JSON Serialization
+   Copying objects with 'copyWiith'
+   The cascade operator
+   Simple eCommerce store: Overview
+
+150.Creating the Product, Item, Cart classes
+   Adding the interactive prompt
+   Adding items to the cart
+   Checkout functionality
+   Project structure and wrap-up
+
+155.Section Intro
+   Creating and using mixins
+   Mixins: Drawbacks
+   Extensions
+   Extensions with generic type constraints
+
+160.Exercise: Range extension
+   Section Intr
+   Errors vs Exceptions
+   Assertions
+   Exceptions: 'throw', 'try', 'catch', 'finally', 'rethrow'
+
+165.Exercise: Email validation
+   Section Intro
+   Futures, 'then', 'catchError', 'whenComplete'
+   'async' and 'await'
+   'Future.value' and 'Future.error'
+
+170.Exercise: Countdown with Futures
+   Streams
+   Stream generators: 'async*' and 'yield'
+   Exercise: fizz-buzz with streams
+   Stream constructors
+
+175.Stream methods
+   Single/multiple subscription streams
+   Weather App Overview
+   REST API Basics
+   Creating the command-line app
+
+180.Creating a Weather API Client with the Dart http package
+   Reading the response status code and data
+   Completing the Weather API Client
+   Parsing JSON Data
+   Error Handling and Wrap up
+
+185.Free Dart / Flutter eBook ($40 value) & Next Steps
