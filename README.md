@@ -2,8 +2,6 @@
 
 ![01](assets/01.png)
 
-> 仅记与JS区别部分！
-
 ## lesson 12 String interpolation
 
 ```dart
@@ -346,4 +344,85 @@ void main() {
 }
 ```
 
-> l-54
+## Collections
+
+> A collection is a group of values that belong together
+
+- Lists, sets, maps
+- How to use them, common operations
+- Type system & type inference with collections
+- Collection-if, collection-for, spreads
+
+- Dart 中 List 照样不能越界
+- `[].first` -> ❌
+- final  variabs cant be `re-assigned`
+- but you can still modify `their contents`
+
+Warp Up
+
+- you can declare list variables as var, final, const
+- final, const variables can only be `set once`
+- can still `modify` contents of final variables
+- but not with const variables
+- Sets are collections of `unique` values
+- List can contain `deplicate` values
+
+Sets
+
+```dart
+var euCountries = {'Italy', "UK", "Russia"};
+var asianCountries = {'Inida', 'China'};
+euCountries.add("UK");
+print(euCountries); // -> {Italy, UK, Russia}
+print(euCountries.union(asianCountries));
+// -> {Italy, UK, Russia, Inida, China}
+print(euCountries.intersection(asianCountries)); // -> {}
+print(euCountries.difference(asianCountries));
+// -> {Italy, UK, Russia}
+```
+
+Map
+
+> JSON
+
+```dart
+Map<String, dynamic> person = {'name': "Jerry", 'age': 18, 'height': 180};
+
+var person2 = <String, dynamic>{
+  'name': "Jerry2",
+  'age': 18,
+};
+
+var name = person["name"];
+print(name);
+
+person["likesPizza"] = true;
+print(person);
+
+// 要是想确定它的类型，好打点的话
+var name = person['name'] as String;
+```
+
+- 和JS一样的，类似于Object，还能增加额外属性嘛
+- 如果你用 `dynamic` 确定map的属性值的类型，那么可以用 `as` 操作符
+
+- 注意 `Map` 上没有迭代器，所以不能使用 `// for (var item in person) {}` 迭代 ❌
+- 但可以像 js 那个获取 keys ，通过 keys 来遍历
+- 竟然也有 `Map.values` 和 js 的 object 很像
+
+```dart
+for (var key in person.keys) {
+  print(key);
+  print(person[key]);
+}
+
+for (var value in person.values) {
+  print(value);
+}
+
+for (var entry in person.entries) {
+  print('${entry.key}: ${entry.value}');
+}
+```
+
+l-54
