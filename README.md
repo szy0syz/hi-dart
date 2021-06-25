@@ -128,3 +128,64 @@ void main() {
     print((~y).toRadixString(2));
 }
 ```
+
+## lesson 28 Dart Type System
+
+- Static vs dynamic languages
+- Type Infernce
+- `var`, `final`, `const`, `dynamic` keywords
+
+## leeson 29 Compile
+
+![01](assets/03.png)
+
+Static languages: advantages
+
+- Discover type-related bugs at compile time
+  - Huge time saver => hard to discover runtime bugs in big projects
+- More readable code
+  - Rely on variables having the type they were declared with
+- More maintainable code
+  - When you change someting, type system warns you about things that break
+- Compiled code is more effieient
+  - compiler knows more and can optimise things
+
+## lesson 31
+
+- final means `read-only` (can only be set once);
+- perfer `final` to `var` whenever possible
+- 对，尽可能地使用 `final` 而不是用 `var`
+
+```dart
+void main() {
+  var name = 'Jerry';
+  var age = 30;
+  var height = 1.88;
+
+  final newAge = 31;
+  newAge = 32; // line 7 • The final variable 'newAge' can only be set once.
+}
+```
+
+## lesson 32 const
+
+- const defines a `compile-time constant`
+- very good for performance => Dart can optimize generated code
+- const 的变量只能被赋值常量，为什么字符串转换也不行！
+- 说是 `title.toUpperCase()` 只能在 `runtime` 被执行，在编译时无法确定！
+- `var` 倒是随便被赋值多少次都可以！
+- `final` 只能被赋值一次
+- `const` 只能被赋值编译时的常量 -> `compile-time constants`
+
+> **Best Practice**
+>
+> **const > final > var**
+
+```dart
+void main() {
+  const title = "Dart 123";
+  const titleUppercaed = title.toUpperCase(); // ❌
+  // Const variables must be initialized with a constant value.
+  print(titleUppercaed);
+}
+```
