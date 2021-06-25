@@ -285,3 +285,12 @@ void main() {
   }
 }
 ```
+
+## Dart Initial
+
+- `https://dart.dev/tools/sdk/archive`
+- 解压安装包后将 `bin` 目录固定好
+- 修改终端配置，添加环境变量
+  - `export PATH=/Users/szy0syz/workspace/dart/dart-sdk/bin:$PATH`
+
+> l-49
