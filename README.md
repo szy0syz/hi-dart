@@ -10,7 +10,7 @@
 void main() {
   String name = "jerry";
   int age = 18;
-  double height = 1.70;
+  double height = 1.80;
   bool likesDart = true;
 
   print("My name is $name. I'm $age years old. I'm $height meters tall.");
@@ -88,4 +88,43 @@ void main() {
 
 ![02](assets/02.png)
 
-> l-21
+## lesson 21 Exercise: temperature conversion
+
+```dart
+void main() {
+  double tempFarenheit = 88.88;
+  double tempCelsius = (tempFarenheit - 32) / 1.8;
+
+  print('${tempFarenheit}°F = ${tempCelsius.toStringAsFixed(2)}°C');
+}
+```
+
+## lesson 23 Logical & Relational operators
+
+```dart
+void main() {
+  print(5 == 2);
+  print(5 != 2);
+  print(5 >= 2);
+  print(5 > 2);
+  print(5 <= 2);
+  print(5 < 2);
+
+  print(5 < 2.5);   // -> false
+  print(5 < 'hi');  // -> ❌ Error: Compilation failed.
+}
+```
+
+## lesson 25 Hex format, bitwise & shifting operators
+
+```dart
+void main() {
+  int x = 0xF0; // binary: 111000
+  int y = 0x0F; // binary: 000111
+
+  print((x | y).toRadixString(2));    // -> 11111111
+  print((x | y).toRadixString(16));   // -> ff
+  print((x ^ y).toRadixString(2));   // -> 0
+    print((~y).toRadixString(2));
+}
+```
