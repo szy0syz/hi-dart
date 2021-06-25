@@ -238,3 +238,50 @@ void main() {
 
 - 🔥 `dynamic` is useful in very specific cases
 - for erverthing else, use `var`, `final`, `const`
+
+> 终于乱清楚了 Dart 里的 `var`, `final`, `const`
+
+## lesson 41 'break' and 'continue'
+
+- `for` 循环用 `var` 挺好
+- `for (var i = 1; i<=15; i++)`
+- Use `break` and `continue` to alter the flow inside `for/while` loops
+- Not always necessary (can implement fizz buzz with if/else only)
+- Use them as needed
+
+## lesson 43 enumerations
+
+- 用起来很轻松
+
+```dart
+enum Medal { gold, silver, bronze }
+```
+
+## lesson 44 Exercise: simple calculator
+
+```dart
+enum Operation { plus, minus, multiply, divide }
+
+void main() {
+  const a = 4;
+  const b = 2;
+  const op = Operation.plus;
+
+  switch (op) {
+    case Operation.plus:
+      print('$a + $b = ${a + b}');
+      break;
+    case Operation.minus:
+      print('$a - $b = ${a - b}');
+      break;
+    case Operation.multiply:
+      print('$a + $b = ${a * b}');
+      break;
+    case Operation.divide:
+      print('$a - $b = ${a / b}');
+      break;
+    default:
+      break;
+  }
+}
+```
