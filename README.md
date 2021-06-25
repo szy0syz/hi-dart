@@ -292,5 +292,58 @@ void main() {
 - 解压安装包后将 `bin` 目录固定好
 - 修改终端配置，添加环境变量
   - `export PATH=/Users/szy0syz/workspace/dart/dart-sdk/bin:$PATH`
+- VSCode plugins
+  - `dart`
+  - dracula official
+  - Bracket Pari Colorizer 2
+  - Error Lens
 
-> l-49
+## Project: Rock, Paper & Scissors
+
+![04](assets/04.png)
+
+```dart
+enum Move { rock, paper, scissors }
+// index: 0,1,2,3...
+
+void main() {
+  final rng = Random();
+  while (true) {
+    stdout.write("Rock, paper or scissors? (r/p/s)");
+    final input = stdin.readLineSync();
+    if (input == 'r' || input == 'p' || input == 's') {
+      // playerMove is declared without an initializer (defaults to null)
+      var playerMove;
+      if (input == 'r') {
+        playerMove = Move.rock;
+      } else if (input == 'p') {
+        playerMove = Move.paper;
+      } else {
+        playerMove = Move.scissors;
+      }
+      final random = rng.nextInt(3);
+      final aiMove = Move.values[random];
+
+      print('You played: $playerMove');
+      print('AI played: $aiMove');
+
+      // --- 判断比赛结果 ---
+      if (playerMove == aiMove) {
+        print("It's a draw");
+      } else if (playerMove == Move.rock && aiMove == Move.scissors ||
+          playerMove == Move.paper && aiMove == Move.rock ||
+          playerMove == Move.scissors && aiMove == Move.paper) {
+        print("You win");
+      } else {
+        print("You lose");
+      }
+    } else if (input == 'q') {
+      break;
+    } else {
+      print("Invalid input");
+    }
+  }
+}
+```
+
+> l-54
