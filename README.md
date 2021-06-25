@@ -425,4 +425,131 @@ for (var entry in person.entries) {
 }
 ```
 
-l-54
+## lesson 66  Exercise: Pizza Ordering
+
+```dart
+void main() {
+  const pizzPrices = {'margherita': 5.5, 'pepperoni': 7.5, 'vegetarian': 6.5};
+  const order = ['margherita', 'pepperoni', 'hot'];
+  var total = 0.0;
+
+  for (var item in order) {
+    final price = pizzPrices[item];
+    if (price != null) {
+      total += price;
+    } else {
+      print('$item pizza is not on the menu');
+    }
+  }
+
+  print('Total: \$$total');
+
+  /*
+  hot pizza is not on the menu
+  Total: $13.0
+  */
+}
+```
+
+## lesson 68 Exercise: Restaurant ratings
+
+```dart
+void main() {
+  var restaurants = [
+    {
+      'name': 'Pizza Mario',
+      'cuisine': 'Italian',
+      'ratings': [5.0, 3.5, 4.5],
+    },
+    {
+      'name': 'Chez Anne',
+      'cuisine': 'French',
+      'ratings': [5.0, 4.5, 4.0],
+    },
+    {
+      'name': 'Navaratna',
+      'cuisine': 'Italian',
+      'ratings': [4.0, 4.5, 4.0],
+    },
+  ];
+
+  for (var restaurant in restaurants) {
+    final ratings = restaurant['ratings'] as List<double>;
+    var total = 0.0;
+    for (var rating in ratings) {
+      total += rating;
+    }
+    final avgRating = total / ratings.length;
+    restaurant['avgRating'] = avgRating.toStringAsFixed(2);
+    print(restaurant);
+  }
+}
+```
+
+## lesson 69 Collection-if
+
+> 竟然可以在声明集合时用 if
+
+```dart
+void main() {
+  const addBlue = false;
+  const addRed = true;
+  const extraColors = ['yellow', 'green'];
+  final colors = [
+    'grey',
+    'brown',
+    if (addBlue) 'blue',
+    if (addRed) 'red',
+  ];
+  colors.addAll(extraColors);
+  print(colors);
+}
+```
+
+## lesson 70 Collection-for
+
+```dart
+const extraColors = ['yellow', 'green'];
+final colors = [
+  'grey',
+  'brown',
+  if (addBlue) 'blue',
+  for (var color in extraColors) color,
+];
+```
+
+## lesson 71 Spreads
+
+```dart
+final colors = [
+  'grey',
+  'brown',
+  if (addBlue) 'blue',
+  ...extraColors,
+];
+```
+
+- 到底该怎么用 `Collection-if` / `Collection-for`
+- 目前场景就是在一个根据条件生成的新Map时，是直接字面量生成法
+
+```dart
+const grans = {
+  'rice': '1kg'
+}
+
+var shoppingList = {
+  if (bann > 0) 'bann': 123,
+  if (apples > 0) 'apples': 'ok',
+  if (addGrains) ...grans
+}
+```
+
+### lesson 73 Copying collections
+
+> 和js一样的，用 `Spreads` `...`
+>
+> 当然还是有 shallow vs deep copy
+>
+> collections 不能少了 `filter` `map` `reduce`
+
+l-75
