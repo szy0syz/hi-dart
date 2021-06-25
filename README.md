@@ -189,3 +189,52 @@ void main() {
   print(titleUppercaed);
 }
 ```
+
+## lesson 33 Exercise: var, final and const
+
+Given the following program:
+
+```dart
+void main() {
+  String text = 'I like pizza';
+  String topping = 'with tomatoes';
+  String favourite = '$text $topping';
+  String newText = favourite.replaceAll('pizza', 'pasta');
+  favourite = 'Now I like curry';
+  print(newText);
+}
+```
+
+Can you guess which variables can be declared as `const`, `final`, and `var`, while still resulting in a valid program?
+
+Remember: prefer `const` over `final` over `var`.
+
+```dart
+void main() {
+  const text = 'I like pizza';
+  const topping = 'with tomatoes';
+  String favourite = '$text $topping';
+  final newText = favourite.replaceAll('pizza', 'pasta');
+  favourite = 'Now I like curry';
+  print(newText);
+}
+```
+
+## lesson 34 The 'dynamic' keyword
+
+- use dynamic to `opt-out` of type safety
+- 使用 dynamic 去过类型安全检查？
+- `var` 的变量可以多次赋值相同类型的值，但不能跨类型赋值
+
+```dart
+void main() {
+  var x = 10;
+  x = true; // -> ❌  A value of type 'bool' can't be assigned to a variable of type 'int'.
+
+  dynamic y = 10;
+  y = true;
+}
+```
+
+- 🔥 `dynamic` is useful in very specific cases
+- for erverthing else, use `var`, `final`, `const`
