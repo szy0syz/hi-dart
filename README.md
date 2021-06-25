@@ -2,6 +2,8 @@
 
 ![01](assets/01.png)
 
+> 仅记与JS区别部分！
+
 ## lesson 12 String interpolation
 
 ```dart
@@ -54,3 +56,36 @@ This is even longer sentence, which will not fit inside a single line.
 ```
 
 > 语法糖竟然那么甜！
+
+## lesson 18 Finding and replacing strings
+
+```dart
+void main() {
+  String title = "I love pizza";
+  bool containsPazza = title.contains('pizza');
+  print(containsPazza);
+  String lovePasta = title.replaceAll('pizza', 'pasta');
+  print(lovePasta);
+}
+```
+
+### lesson 19 Conversations between types
+
+- 不要企图转换非法类型的值，否则一样抛异常！
+
+```dart
+void main() {
+  String ratingString = '4.5';
+  double tating = double.parse(ratingString);
+  print(tating);
+
+  String helloString = 'hello';
+  print(double.parse(helloString));
+}
+```
+
+## lesson 20 Arithmetic operators
+
+![02](assets/02.png)
+
+> l-21
