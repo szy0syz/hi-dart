@@ -653,4 +653,51 @@ if (b == null) {
 - `!` is also called the `bang` operator 💥
 - 传说中的 💣 `炸弹操作符`，真逗！
 
+## lesson 83 The if-null operator
+
+- `int? maybeValue;`
+- `int value = maybeValue == null ? 0 : maybeValue;`
+- -> `int value = maybeValue == null ?? 0;`
+- -> `maybeValue ??= 0;`
+
+## lesson 84 Null Safety with type inference
+
+```dart
+void main() {
+  const x = -1;
+  var maybeValue;
+  if (x > 0) {
+    maybeValue = x;
+  }
+  maybeValue ??= 0;
+  final value = maybeValue;
+  print(value);
+}
+```
+
+- Should we use type inference or decalare types explicity?
+- 我们到底应该使用类型声明还是多用类型推断？
+- initialize variables when you declare them,
+- and use type inference
+- 建议我们在定义和初始化变量时，可以使用类型推断
+- Type inference and Null Safty work well with each other
+- 应该使用类型推断和 Null Safty 组合起来用更好
+
+## lesson 85 Null Safety with collections
+
+```dart
+void main() {
+  // 在 runtime，很容易出现下面这样情况，此时如果调用null上的一些字符串方法就崩了
+  // const cities = <String>['London', 'Paris', null];
+
+  const cities = <String?>['London', 'Paris', null];
+
+  for (var city in cities) {
+    print(city?.toUpperCase());
+  }
+}
+```
+
+- Calling methods on null variables is a very common mistake -> 赞同 👍
+
 l-80
