@@ -1176,4 +1176,20 @@ void main() {
 - Need a `mutable` member variable ?
 - a public getter variable
 
-l-122
+## Classes: Advanced
+
+- Subclassing (inheritance)
+- Super constructor
+- Overiding methods
+- Abstract classes
+- Implements vs extends
+- base Object class
+- toString(), `==` operator, hashCode
+- Equatable package
+- Generics with classes
+- Composition vs inheritance
+- Factory constructors
+- copying objects with copyWith
+- cascade operator (..)
+
+l-132
