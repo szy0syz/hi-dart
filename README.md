@@ -355,7 +355,7 @@ void main() {
 
 - Dart 中 List 照样不能越界
 - `[].first` -> ❌
-- final  variabs cant be `re-assigned`
+- final variabs cant be `re-assigned`
 - but you can still modify `their contents`
 
 Warp Up
@@ -403,8 +403,8 @@ print(person);
 var name = person['name'] as String;
 ```
 
-- 和JS一样的，类似于Object，还能增加额外属性嘛
-- 如果你用 `dynamic` 确定map的属性值的类型，那么可以用 `as` 操作符
+- 和 JS 一样的，类似于 Object，还能增加额外属性嘛
+- 如果你用 `dynamic` 确定 map 的属性值的类型，那么可以用 `as` 操作符
 
 - 注意 `Map` 上没有迭代器，所以不能使用 `// for (var item in person) {}` 迭代 ❌
 - 但可以像 js 那个获取 keys ，通过 keys 来遍历
@@ -425,7 +425,7 @@ for (var entry in person.entries) {
 }
 ```
 
-## lesson 66  Exercise: Pizza Ordering
+## lesson 66 Exercise: Pizza Ordering
 
 ```dart
 void main() {
@@ -530,7 +530,7 @@ final colors = [
 ```
 
 - 到底该怎么用 `Collection-if` / `Collection-for`
-- 目前场景就是在一个根据条件生成的新Map时，是直接字面量生成法
+- 目前场景就是在一个根据条件生成的新 Map 时，是直接字面量生成法
 
 ```dart
 const grans = {
@@ -546,7 +546,7 @@ var shoppingList = {
 
 ### lesson 73 Copying collections
 
-> 和js一样的，用 `Spreads` `...`
+> 和 js 一样的，用 `Spreads` `...`
 >
 > 当然还是有 shallow vs deep copy
 >
@@ -554,8 +554,8 @@ var shoppingList = {
 
 ## Project: Data Processing
 
-- 要点：`Code Defensively`  -> `Fail Gracefully`
-- 防御性编程  ->  优雅的处理异常
+- 要点：`Code Defensively` -> `Fail Gracefully`
+- 防御性编程 -> 优雅的处理异常
 - Top Tip: Choose `descriptive` names for variables, as the carry more `meaning`
 - 给变量取一个有描述意义的名称，这样它讲带来更多意义，使人读起来好理解
 
@@ -625,7 +625,6 @@ void main(List<String> args) {
 - Flow Analysis: Definite Assignment
 - Dart knows for sure when a varible is assigned
 
-
 ```dart
 if (b == null) {
   print('a is null');
@@ -646,7 +645,7 @@ if (b == null) {
 ## leeson 82 The assertion operator
 
 - 断言操作符 (!)
-- 不摆了，就是和ts差不多的
+- 不摆了，就是和 ts 差不多的
 - if you are sure that a nullable variable will always have a non-nullable value,
 - it is safe to assign it to a non-nullable variable with the `!` operator.
 - but if you are wrong, you will get a runtime error
@@ -707,7 +706,7 @@ Null Safety features:
 
 - Nullable & non-nullable varibles
 - Flow Analysis: promotion & definite assignemnt
-- 提升null变量的处理 和 变量定义时就强制确认非空类型
+- 提升 null 变量的处理 和 变量定义时就强制确认非空类型
 - Every time you declare a variable, think about whether it should be nullable or not
 - 每次定义变量时，提前想好这家伙到底能不能为 `nullable`
 - This will lead to better code
@@ -828,13 +827,283 @@ Take Away
 final even = list.where((value) => value % 2 == 0);
 ```
 
-- 不就是一个js里的fliter嘛...
+- 不就是一个 js 里的 fliter 嘛...
 
 ```dart
 final value = list.firstWhere((x) => x == 14, orElse: () => -1);
 ```
 
-- 不就是一个js里的find嘛...
+- 不就是一个 js 里的 find 嘛...
 - 多了个否则的条件
 
-l-110
+## lesson 110 Exercise: Implement the 'where' function
+
+> 实现一个泛型 where
+
+```dart
+void main() {
+  const list = [1, 2, 3, 4, 5];
+  final odd = where<int>(list, (value) => value % 2 == 1);
+  print(odd);
+}
+
+List<T> where<T>(List<T> items, bool Function(T) f) {
+  var results = <T>[];
+
+  for (var item in items) {
+    if (f(item)) {
+      results.add(item);
+    }
+  }
+
+  return results;
+}
+```
+
+## lesson 111 Ecercise: Implement the 'firstWhere' function
+
+> 再来一把 firstWhere
+
+```dart
+void main() {
+  const list = [1, 2, 3, 4, 5];
+  final odd = firstWhere<int>(list, (value) => value == 0, orElse: () => -1);
+  print(odd);
+}
+
+T firstWhere<T>(List<T> items, bool Function(T) f,
+    {required T Function() orElse}) {
+  for (var item in items) {
+    if (f(item)) {
+      return item;
+    }
+  }
+
+  return orElse();
+}
+```
+
+## lesson 112 The 'reduce' method
+
+> 最喜欢的函数
+
+```dart
+// 从 emails 中找到不认识的 ·域名·
+void main() {
+  const emails = [
+    'abs@abc.com',
+    'me@example.co.uk',
+    'john@gmail.com',
+    'katy@yahoo.com',
+  ];
+
+  const knownDomains = ['gmail.com', 'yahoo.com'];
+  // (abc.com, example.co.uk)
+
+  final unknownDomains = emails
+    .map((email) => email.split('@').last)
+    .where((domain) => !knownDomains.contains(domain));
+
+  print(unknownDomains);
+}
+```
+
+```dart
+final unknownDomains = getUnknwndomains(emails, knownDomains);
+
+// 使用泛型封装一道
+Iterable<String> getUnknwndomains(List<String> emails, List<String> knownDomains) =>
+  emails
+    .map((email) => email.split('@').last)
+    .where((domain) => !knownDomains.contains(domain));
+```
+
+- 竟然比 `js` 写着更舒心...
+
+## lesson 114 Classes
+
+> the foundation of object-oriented programming
+
+- create classes
+- constructors
+- member variables and methods
+- getters and setters
+- static keyword
+- making things private
+
+> used to define new types
+
+- 到底类有啥子用？
+- `Containers` that `hold` some data
+- 提供了一个容器保存一些数据
+- functionality for `manipulating` that data
+- 提供 “操作” 这些数据的一些功能
+- basis of object-oriented programming
+- 面向对象编程的基础
+
+```dart
+class BankAccount {
+  double balance = 0;
+
+  void deposit(double amount) {
+    balance += amount;
+  }
+
+  bool withdraw(double amount) {
+    if (balance > amount) {
+      balance -= amount;
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+void main() {
+  final bankAccount = BankAccount();
+  bankAccount.deposit(100);
+  bankAccount.deposit(50);
+
+  final success1 = bankAccount.withdraw(100);
+  print('success: $success1, balance: ${bankAccount.balance}');
+  final success2 = bankAccount.withdraw(100);
+  print('success: $success2, balance: ${bankAccount.balance}');
+}
+```
+
+> 这例子真够贴切的。
+
+```dart
+class BankAccount {
+  BankAccount(double balance) {
+    this.balance = balance;
+  }
+}
+```
+
+- 类可以 `new`，也可以不 `new`。
+- 类属性直接用，不需要加 `this`
+- 但在构造函数里就必须加 `this`
+
+## lesson 118 Initializer lists and the shorthand syntax
+
+```dart
+class BankAccount {
+  BankAccount({required String accountHolder, double balance = 0})
+      : balance = balance,
+        accountHolder = accountHolder;
+
+  double balance;
+  String accountHolder;
+
+  void deposit(double amount) {
+    balance += amount;
+  }
+}
+```
+
+还有一种更直接的，底下这种更和 TS 类似了。
+
+```dart
+class BankAccount {
+  BankAccount({required this.accountHolder, this.balance = 0});
+
+  double balance;
+  String accountHolder;
+}
+```
+
+## lesson 119 Classes with immutable members
+
+- 如果在定义类时，给属性成员加了 `final`，则它就只有 `getter`，没了 `setter`
+- Class design `is type design`
+- `Strive` to make your types
+  - `easy` to use `correctly`
+  - `hard` to use `incorrectly`
+- 在做类的设计时，需要很容易地将它使用起来，但很难地使用出错。
+
+```dart
+class Person {
+  Person({
+    required this.name,
+    required this.age,
+    required this.height
+  });
+
+  final String name;
+  final int age;
+  final double height;
+
+  void printDescription() {
+    print("My name is $name");
+  }
+}
+```
+
+## lesson 122 'const' constructors
+
+- 最佳实践
+- have a class where all variables are final?
+- Use a const constructor 👍
+- 这些写就可以开启性能优化
+
+```dart
+class Complex {
+  const Complex(this.re, this.im);
+  double re; // -> ❌ 必须是final
+  final double im;
+}
+```
+
+```dart
+class Complex {
+  const Complex(this.re, this.im);
+  final double re;
+  final double im;
+}
+
+void main() {
+  const zero = Complex(0, 0);
+
+  final identity = Complex(1, 0);
+
+  // 实数: a+i*0
+  final real = Complex(3, 0);
+
+  // 虚数 0+i*b
+  final imaginary = Complex(0, 4);
+}
+```
+
+升级后，类的静态方法！！！😂
+
+```dart
+class Complex {
+  const Complex(this.re, this.im);
+  const Complex.zero()
+      : re = 0,
+        im = 0;
+  const Complex.identity()
+      : re = 0,
+        im = 0;
+  const Complex.real(this.re) : im = 0;
+  const Complex.imaginary(this.im) : re = 0;
+
+  final double re;
+  final double im;
+}
+
+void main() {
+  const zero = Complex.zero();
+
+  final identity = Complex.identity();
+
+  // 实数: a+i*0
+  final real = Complex.real(3);
+
+  // 虚数 0+i*b
+  final imaginary = Complex.imaginary(4);
+}
+```
+
+l-122
