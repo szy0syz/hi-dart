@@ -22,9 +22,9 @@ void main() {
 ```dart
 void main() {
   int a = 10;
-  print("$a");	// -> 10
-  print("\$a");	// -> $a
-  print("\$$a");// -> $10
+  print("$a"); // -> 10
+  print("\$a"); // -> $a
+  print("\$$a"); // -> $10
 }
 ```
 
@@ -554,6 +554,103 @@ var shoppingList = {
 
 ## Project: Data Processing
 
-> Null Safty 竟然就是 ? ! ?? 操作符！
+- 要点：`Code Defensively`  -> `Fail Gracefully`
+- 防御性编程  ->  优雅的处理异常
+- Top Tip: Choose `descriptive` names for variables, as the carry more `meaning`
+- 给变量取一个有描述意义的名称，这样它讲带来更多意义，使人读起来好理解
 
-l-75
+```dart
+void main(List<String> args) {
+  if (args.isEmpty) {
+    print('Usage: dart totals.dart <inputFile.csv>');
+    exit(1);
+  }
+
+  final inputFile = args.first;
+  // 要注意FS异常，一般这么做：
+  // 先检查文件是否存在，再去读它。
+  final lines = File(inputFile).readAsLinesSync();
+  final totalDurationByTag = <String, double>{};
+
+  // 不要表头
+  lines.removeAt(0);
+
+  var totalDutation = 0.0;
+  for (var line in lines) {
+    final values = line.split(',');
+    final durationStr = values[3].replaceAll('"', '');
+    final duration = double.parse(durationStr);
+    final tag = values[5].replaceAll('"', '');
+    final previousTotal = totalDurationByTag[tag];
+
+    if (previousTotal == null) {
+      totalDurationByTag[tag] = duration;
+    } else {
+      totalDurationByTag[tag] = previousTotal + duration;
+    }
+
+    totalDutation += duration;
+  }
+
+  for (var entry in totalDurationByTag.entries) {
+    final durationFormatted = entry.value.toStringAsFixed(1);
+    final tag = entry.key == '' ? 'Unallocated' : entry.key;
+    print('$tag: ${durationFormatted}h');
+  }
+
+  print('\nTotalDutation: ${totalDutation.toStringAsFixed(1)}h');
+}
+```
+
+## Null Safty
+
+> nullable & non-nullable types
+>
+> Null Safty 竟然就是 ? ! ?? 操作符 🥶
+
+```dart
+void main(List<String> args) {
+  int a = 1;
+  int? b;
+
+  print(a + b);  -> ❌
+  // The argument type 'int?' can't be assigned to the parameter type 'num'.
+}
+```
+
+- Flow Analysis: Promotion
+- Nullable variables can be promoted to non-nullable
+- 我们可以在流程上提前处理 null 的情况
+
+- Flow Analysis: Definite Assignment
+- Dart knows for sure when a varible is assigned
+
+
+```dart
+if (b == null) {
+  print('a is null');
+} else {
+  print(a + b);
+}
+```
+
+- Dart without Null Safety -> Runtime error
+- Dart with Null Safety -> Compile-time error
+- -> the compiler helps us to write safer programs
+- 这难道就是 `Null Safty` 的奥义把！
+- `Null Safty` makes us more `productive`
+  - great advantage on bigger programs
+  - 当然可以在大型项目中带来巨大的优势
+- Dart can tell us when we're doing something wrong
+
+## leeson 82 The assertion operator
+
+- 断言操作符 (!)
+- 不摆了，就是和ts差不多的
+- if you are sure that a nullable variable will always have a non-nullable value,
+- it is safe to assign it to a non-nullable variable with the `!` operator.
+- but if you are wrong, you will get a runtime error
+- `!` is also called the `bang` operator 💥
+- 传说中的 💣 `炸弹操作符`，真逗！
+
+l-80
