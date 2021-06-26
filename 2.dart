@@ -1,26 +1,15 @@
-class Complex {
-  const Complex(this.re, this.im);
-  const Complex.zero()
-      : re = 0,
-        im = 0;
-  const Complex.identity()
-      : re = 0,
-        im = 0;
-  const Complex.real(this.re) : im = 0;
-  const Complex.imaginary(this.im) : re = 0;
+class Strings {
+  static const welcome = 'Welcome';
+  static const signIn = 'Sign In';
+  static String greet(String name) => 'Hi, $name';
 
-  final double re;
-  final double im;
+  // 实例方法
+  void foo() {
+    print(welcome);
+  }
 }
 
 void main() {
-  const zero = Complex.zero();
-
-  final identity = Complex.identity();
-
-  // 实数: a+i*0
-  final real = Complex.real(3);
-
-  // 虚数 0+i*b
-  final imaginary = Complex.imaginary(4);
+  print(Strings.welcome);
+  print(Strings.greet('jerry'));
 }

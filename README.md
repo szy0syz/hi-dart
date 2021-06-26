@@ -1106,4 +1106,74 @@ void main() {
 }
 ```
 
+## lesson 125 Getters and setters
+
+```dart
+class Temperature {
+  Temperature.celsius(this.celsius);
+  Temperature.farenheit(double farenheit) : celsius = (farenheit - 32) / 1.8;
+
+  double celsius;
+  // double farenheit() => celsius * 1.8 + 32;
+  double get farenheit => celsius * 1.8 + 32;
+
+  set farenheit(double farenheit) => celsius = (farenheit - 32) / 1.8;
+}
+
+void main() {
+  final temp1 = Temperature.celsius(30);
+  final temp2 = Temperature.farenheit(90);
+  print(temp1.celsius);
+  temp1.celsius = 32;
+  print(temp1.celsius);
+  temp2.farenheit = 100;
+  print(temp2.farenheit);
+}
+```
+
+## lesson 126 Exercise: Restaurant ratings with classes
+
+```dart
+class Restaurant {
+  const Restaurant(
+      {required this.name, required this.cuisine, required this.ratings});
+
+  final String name;
+  final String cuisine;
+  final List<double> ratings;
+
+  int get numRatings => ratings.length;
+  double? avgRating() {
+    if (ratings.isEmpty) {
+      return null;
+    }
+    return ratings.reduce((value, element) => value + element) / numRatings;
+  }
+}
+```
+
+```dart
+class Strings {
+  static const welcome = 'Welcome';
+  static const signIn = 'Sign In';
+  static String greet(String name) => 'Hi, $name';
+
+  // 实例方法
+  void foo() {
+    print(welcome);
+  }
+}
+
+void main() {
+  print(Strings.welcome);
+  print(Strings.greet('jerry'));
+}
+```
+
+## lesson 128 Private variables and methods
+
+- `Dart` 的 `class` 中，加了下划线就是这个类的私有属性或方法了
+- Need a `mutable` member variable ?
+- a public getter variable
+
 l-122
