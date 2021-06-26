@@ -699,5 +699,42 @@ void main() {
 ```
 
 - Calling methods on null variables is a very common mistake -> 赞同 👍
+- Null Pointer exception 空指针异常
 
-l-80
+## lesson 86 The conditional access operator & the billion dollar mistake
+
+Null Safety features:
+
+- Nullable & non-nullable varibles
+- Flow Analysis: promotion & definite assignemnt
+- 提升null变量的处理 和 变量定义时就强制确认非空类型
+- Every time you declare a variable, think about whether it should be nullable or not
+- 每次定义变量时，提前想好这家伙到底能不能为 `nullable`
+- This will lead to better code
+
+## Functions
+
+> Essential build blocks to organize our code and make it more reusable
+
+- How to declare and use functions (pass arguments, get return value)
+- Difference between named and positional arugments
+- Default Values and required arguments+ how to use them with Null Safety
+- Arrow notation to write more concise functions
+- Lexical scope & inner functions
+- Avoiding global mutable state & pure functions
+
+```dart
+void main() {
+  print(sum([1,2,3,4]));
+}
+
+double sum(List<double> values) {
+  var sum = 0.0;
+  for (var value in values) {
+    sum += value;
+  }
+  return sum;
+}
+```
+
+l-88
