@@ -737,4 +737,104 @@ double sum(List<double> values) {
 }
 ```
 
-l-88
+## lesson 94 Default positional arguments
+
+```dart
+void main() {
+  foo(1, 5);
+}
+
+void foo(int a, [int b = 2]) {
+  print('a: $a, b: $b');
+}
+```
+
+## lesson 103 Function Types
+
+> 函数签名
+
+```dart
+// typedef Greet = String Function(String);
+typedef String Greet(String name);
+
+void main() {
+  final sayHi = (name) => 'Hi, $name.';
+
+  welcome(sayHi, 'Jerry');
+}
+
+void welcome(Greet greet, String name) {
+  print(greet(name));
+  print('Welcome to this');
+}
+```
+
+## lesson 104 Closures
+
+```dart
+void main() {
+  const mul = 10;
+  const list = [1, 2, 3];
+  final result = list.map((x) => x * mul);
+  print(result);
+}
+```
+
+- Anonymous function & closures
+- Functions as arguments
+- Named function types (aliases)
+- `-> More effective code`
+
+```dart
+const list = [1, 2, 3];
+list.forEach(print);
+```
+
+## lesson 107 'Iterable' and 'toList()'
+
+Lazy Iterable:
+
+- the anonymous function is not evaluated `until the result is uesd`
+- performance optimization
+
+```dart
+final List<int> doubles = list.map((e) => e * 2).toList();
+```
+
+- 一定要记得，它是在 迭代器 上的！！
+- `iterable.toList()` will:
+  - compute `all` the items
+  - return them inside a `List`
+
+Take Away
+
+- Many collection methods return `Iterable`
+- 原来很多集合的方法返回的都是一个迭代器
+- Use `.toList()` to convert to a `List`
+
+## lesson 108 Code reuse with anonymous functions and generics
+
+- Generics are used to `write type-safe code` and `reduce code duplication`
+- 泛型可以用来书写出 `类型安全的代码` 和 `节省代码重复`
+- Take away
+- We can use `function arguments` and `generics` to take code reuse to the next level
+- 使用函数和泛型可以使得我们的代码复用程度提升到下一个级别
+
+> 纯当练英语了
+
+## lesson 109 The 'where' and 'firstWhere' methods
+
+```dart
+final even = list.where((value) => value % 2 == 0);
+```
+
+- 不就是一个js里的fliter嘛...
+
+```dart
+final value = list.firstWhere((x) => x == 14, orElse: () => -1);
+```
+
+- 不就是一个js里的find嘛...
+- 多了个否则的条件
+
+l-110

@@ -1,12 +1,9 @@
 void main() {
-  print(sum([1,2,3,4]));
-}
+  const list = [1, 2, 3, 4, 5];
 
-double sum(List<double> values) {
-  var sum = 0.0;
-  for (var value in values) {
-    sum += value;
-  }
+  final even = list.where((value) => value % 2 == 0);
+  print(even);
 
-  return sum;
+  final value = list.firstWhere((x) => x == 14, orElse: () => -1);
+  print(value);
 }
