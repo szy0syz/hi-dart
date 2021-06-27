@@ -1440,4 +1440,26 @@ class Subclass implements Base {  // -> ❌
 }
 ```
 
-l-132
+## lesson 138  The base 'Object' class
+
+> 竟然和 `JS` 差不多
+
+![006](assets/06.png)
+
+- Object is the root of the Dart **class hierachy**
+- 一样地，Dart的类也是一个树形节点， Object 类是 root node
+
+> 搞了半天，终于顿悟抽象类的厉害之处。
+
+![007](assets/07.png)
+
+![008](assets/08.png)
+
+## lesson 139 The 'toString()' method
+
+- `toString()`
+- very useful for debugging
+- override it to define a string representation of your own classes
+- already implemented by built-in types (int, String, List...)
+
+l-139 0_24
