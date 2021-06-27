@@ -17,4 +17,7 @@ void main() {
   // credentials.email = 'me@example.com';
 
   final update1 = credentials.copyWith(email: "me@example.com");
+  print(update1);
+   final update2 = credentials.copyWith(email: "too-easy");
+  print(update2);
 }

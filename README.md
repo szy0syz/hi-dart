@@ -1870,5 +1870,7 @@ void main() {
 
 - 其实一旦给构造函数设置了 `const` 就是不允许搞它的意思
 - 然后再配置属性只 `getter，不``setter`，就可以保证类的属性仅在在实例的时候可以复制，但实力后就不能修改
+- Best Practice
+- if you need copy-behaviour in your immutable classes, create a copyWith method
 
 l-147 02:50
