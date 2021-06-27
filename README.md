@@ -1462,4 +1462,85 @@ class Subclass implements Base {  // -> ❌
 - override it to define a string representation of your own classes
 - already implemented by built-in types (int, String, List...)
 
+```dart
+class Point {
+  Point(this.x, this.y);
+
+  final int x;
+  final int y;
+
+  @override
+  String toString() {
+    return "Point($x, $y)";
+  }
+}
+
+void main() {
+  print(Point(1, 2));
+
+  final list = [Point(1, 2), Point(3, 4)];
+
+  print(list);
+}
+
+// -> Point(1, 2)
+// -> [Point(1, 2), Point(3, 4)]
+```
+
+> You can get a human-readable string representation of collections and nested classes
+
+## lesson 140 The equality operator and the 'covariant' keyword
+
+- `print(Point(1, 2) == Point(3, 4));`
+- Dart doesn't know how to compare instances of Point
+
+```dart
+class Point {
+  Point(this.x, this.y);
+
+  final int x;
+  final int y;
+
+  @override
+  String toString() {
+    return "Point($x, $y)";
+  }
+
+  <!-- @override
+  bool operator == (covariant Point other) {
+    if (other is Point) {
+      return x == other.x && y == other.y;
+    }
+
+    return false;
+  } -->
+
+  @override
+  bool operator == (covariant Point other) {
+    // if (other is Point) {
+    //   return x == other.x && y == other.y;
+    // }
+    return x == other.x && y == other.y;
+
+    // return false;
+  }
+}
+
+void main() {
+  print(Point(1, 2) == Point(1, 2));
+  // print(Point(1, 2) == 'a1'); // -> ❌
+  // The argument type 'String' can't be assigned to the parameter type 'Point?'.
+}
+```
+
+- The `is` operator checks for the `runtime` type of a variable
+- 我靠，解释得太 🐮
+- is 操作符检查的事变量的运行时类型!
+- The variable is `promoted` to the given type `inside the if statement`
+- 在 if 语句中使用 is，其实是吧改变了提升到块级作用域中，将他转换成指定的类型，最后比较
+- 这怕已经到了编译器的阶段了 🐮 🐮 🌝
+- Use `covariant` to change the type of an argument `when overriding a menthod`
+- 我们可以使用 `covariant` 在重写方法中的函数的实参，本来要用 Object 的，但我们辅助我们
+- 减少了判断变量类型的步骤，浮云了，语法糖！！！
+
 l-139 0_24
