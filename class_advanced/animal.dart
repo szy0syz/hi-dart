@@ -12,6 +12,13 @@ class Dog extends Animal {
   Dog({required int age}) : super(age: age);
 
   void bark() => print('bark');
+
+  @override
+  void sleep() {
+    // sleep(); -> ❌ 千万别这样调用，否则会无线递归调用自己
+    super.sleep();
+    print('dog: sleep');
+  }
 }
 
 class Cow extends Animal {

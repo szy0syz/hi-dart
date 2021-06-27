@@ -1249,4 +1249,195 @@ void main() {
 
 > 还真是和 `js/ts` 里的那套差球不多！
 
+## lesson 134 Overriding methods
+
+```dart
+class Dog extends Animal {
+  Dog({required int age}) : super(age: age);
+
+  void bark() => print('bark');
+  void sleep() => print('dog: sleep');
+}
+```
+
+> 可以加 `@override` 也可以不加
+>
+> 最佳实践是加上注解好阅读
+
+```dart
+class Dog extends Animal {
+  Dog({required int age}) : super(age: age);
+
+  void bark() => print('bark');
+
+  @override
+  void sleep() {
+    // sleep(); -> ❌ 千万别这样调用，否则会无线递归调用自己
+    super.sleep();
+    print('dog: sleep');
+  }
+}
+```
+
+## lesson 135 Abstract classes
+
+> cannot be instantiated
+> 🤔 🤔 🤔
+> Abstract classes -> What's the point?
+
+```dart
+abstract class Shape {
+  double get area;
+}
+
+class Square extends Shape {
+  Square(this.side);
+
+  final double side;
+
+  @override
+  double get area => side * side;
+}
+
+class Circle extends Shape {
+  Circle(this.radius);
+  final double radius;
+
+  @override
+  double get area => pi * radius * radius;
+}
+
+void printArea(Shape shape) {
+  print(shape.area);
+}
+
+void main() {
+  // 注意：父类可以接替子类的位置 -> 站岗
+  final Shape shape = Square(10);
+  print(shape.area);
+
+  final Shape circel = Circle(5);
+  print(circel.area);
+
+  // 要开始了
+  final shapes = [
+    Square(2),
+    Circle(3)
+  ];
+
+  print('----------');
+
+  shapes.forEach(printArea);
+}
+```
+
+- We can use abstract classes to define an `interface`
+- that can be `implemented` by subclasses
+- Very powerful: `decouples` code that uses an `interface` from its `implementation`
+
+> 我们可以使用抽象类来定义一个接口，然后用子类来实现这个接口。
+>
+> 这样讲非常有用，我们就可以接口和实现的代码完全分离 -> 抽象与现实分离
+>
+> 这样上层调用只需要关系是个 `Shape` 和 有那么一个 `area` 属性能返回面积，其他不关心。
+>
+> 这个太基础了嘛，完全是复习面向对象！
+
+- Dependency Inversion Principle
+- Code with abstractions, to be independent from specific implementtations
+- 使用抽象的代码，独立于具体的实现，通常这样相对地是个好方式
+- (often) a good idea to code against
+- `abstract interfaces` vs `concrete implementations`
+- 抽象接口 vs 具体实现
+
+## lesson 136 Exercise: Area and Perimeter
+
+```dart
+abstract class Shape {
+  double get area;
+  double get primeter;
+
+  void printValues() {
+    print('area: $area, perimeter: $primeter');
+  }
+}
+
+class Square extends Shape {
+  Square(this.side);
+  final double side;
+
+  @override
+  double get area => side * side;
+
+  @override
+  double get primeter => side * side;
+}
+
+class Circle extends Shape {
+  Circle(this.radius);
+  final double radius;
+
+  @override
+  double get area => pi * radius * radius;
+
+  @override
+  double get primeter => 2 * pi * radius;
+}
+
+void main() {
+  final shapes = [
+    Square(3),
+    Circle(4)
+  ];
+
+  shapes.forEach((shape) => shape.printValues());
+}
+```
+
+## lesson 137 Interfaces and the difference between 'implements' and 'extends'
+
+![005](assets/05.png)
+
+- In Dart, erver class has an `implicit` interface
+- **if you want, you can `implement` a `non-abstract` class**
+- 如果你需要，你可以 `implement` 一个 `non-abstract` class
+- We now know how extends and implements work
+- We will lean when we should use them as we make progress
+- mixins and extensions
+- 我更喜欢 `mixins`
+
+```dart
+abstract class InterfaceA {
+  void a();
+}
+
+abstract class InterfaceB {
+  void b();
+}
+
+class AB implements InterfaceA, InterfaceB {
+  @override
+  void a() {
+    print('a');
+  }
+
+  @override
+  void b() {
+    print('b');
+  }
+}
+
+abstract class Base {
+  void foo(); // -> 抽象方法
+  void bar() => print('bar');
+}
+
+class Subclass implements Base {  // -> ❌
+  // Missing concrete implementation of 'Base.bar'.
+  // Try implementing the missing method, or make the class abstract.
+  @override
+  void foo() => print('foo');
+}
+```
+
 l-132
