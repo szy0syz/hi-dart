@@ -1543,4 +1543,195 @@ void main() {
 - 我们可以使用 `covariant` 在重写方法中的函数的实参，本来要用 Object 的，但我们辅助我们
 - 减少了判断变量类型的步骤，浮云了，语法糖！！！
 
-l-139 0_24
+## lesson 141 Exercise: Implement the + and * operators
+
+```dart
+class Point {
+  const Point(this.x, this.y);
+  final int x;
+  final int y;
+
+  @override
+  String toString() => 'Point($x, $y)';
+
+  @override
+  bool operator ==(covariant Point other) {
+    return x == other.x && y == other.y;
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  Point operator +(Point other) {
+    return Point(x + other.x, y + other.y);
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  Point operator *(int other) {
+    return Point(x + other, y + other);
+  }
+}
+
+void main() {
+  // make this compile by overriding the + operator
+  print(Point(1, 1) + Point(2, 0)); // should print: Point(3, 1)
+  // make this compile by overriding the * operator
+  print(Point(2, 1) * 5); // should print: Point(10, 5)
+}
+```
+
+## lesson 142 Overriding 'hashCode' and the Equatable package
+
+- `Equal` objects should have the `same` hashCode
+- 上面这句话说的很有理！
+- `Non-equal` objects should have `different` hashCodes
+- Choosing good `hashCodes` is hard
+- 是的，搞一个好的 `hashCodes` 是很难！
+- Tedious to do it for every new class
+- `https://pub.dev/packages/equatable`
+
+```dart
+class Point extends Equatable {
+  const Point(this.x, this.y);
+  final int x;
+  final int y;
+
+  @override
+  List<Object?> get props => [x, y];
+
+  @override
+  bool get stringify => true;
+
+  @override
+  bool operator ==(covariant Point other) {
+    return x == other.x && y == other.y;
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  Point operator +(Point other) {
+    return Point(x + other.x, y + other.y);
+  }
+
+  @override
+  // ignore: override_on_non_overriding_member
+  Point operator *(int other) {
+    return Point(x + other, y + other);
+  }
+}
+
+void main() {
+  print(Point(1, 1) == Point(1, 1));
+  print(Point(0, 0));
+}
+```
+
+> 只是用个包，方便点，省的自己写很多方法。
+
+Equatable in 4 steps:
+
+- install it in `pubspec.yaml`
+- Add `extends Equatable` to our classes
+- Override `props` variable
+- Override `stringify` and return `true`
+
+> Easier to do, less error prone
+
+Important Note
+
+- Only use Equatable with `immutable` classes!
+
+## lesson 143 Using classes with generics
+
+Recap
+
+- Generics => more reusable code
+- Very common with functional operators (map, where, reduce)
+
+> 来吧，上一个 `Stack class` 的例子说明一下:
+
+```dart
+class Stack<T> {
+  // We created a Stack using a List(composition)
+  final List<T> _items = [];
+
+  void push(T item) => _items.add(item);
+
+  T pop() => _items.removeLast();
+}
+
+void main() {
+  final stack = Stack<int>();
+
+  stack.push(1);
+  stack.push(2);
+
+  print(stack.pop());
+  print(stack.pop());
+
+  final names = Stack<String>();
+  names.push('Jerry');
+  names.push('Tom');
+}
+```
+
+## lesson 144 Composition vs inheritance: Flutter widget hierarchy example
+
+- Flutter
+  - Use composition heavily to describe the application's UI
+  - "Everything is a widget"
+  - 这个 `composition` 才难理解嘛，`组合`，应该是叫 `组合`！
+
+```dart
+abstract class Widget {}
+
+class Text extends Widget {
+  Text(this.text);
+
+  final String text;
+}
+
+class Button extends Widget {
+  Button({required this.child, this.onPressed});
+
+  final Widget child;
+  final void Function()? onPressed;
+}
+
+void main() {
+  // Button class doesn't know what it's child looks like.
+  final button =
+      Button(child: Text('Hello'), onPressed: () => print('button pressed!'));
+  // Button: Scalable approach, Use composition to create complex UIs
+}
+```
+
+- Inside the Flutter SDK:
+  - Composition and inheritance used heavily
+  - 在 `Flutter SDK` 里 **`组合与继承`** 应用的很严重
+
+**Composition & inheritance are important**
+
+- Composition <-> `has-a` relationships
+- Inheritance <-> `is-a` relationships
+
+> 太有深度了 👍 👍 👍
+>
+> 从140开始越来越有深度了
+
+## lesson 145 Factory constructors and reading JSON data
+
+Factory constructors - 工厂构造函数
+
+> common use case: parsing JSON data
+
+- Already covered: `default` & `named` constructors, and `static` methods
+- 其包括：默认和命名过的构造函数，和一些静态方法
+- Factory constructors are useful：
+  - Implement a constructor that doesn't always create a new instance of its class
+  - 执行这个构造函数，但它并不总是创建这个类的实例出来
+  - Initialize a final variable using logic that can't be handled in the initializer list
+
+> 工厂构造函数不需要每次构建新的实例，且不会自动生成实例,而是通过代码来决定返回的实例对象；工厂构造函数类似于 static 静态成员，无法访问 this 指针；一般需要依赖其他类型构造函数；工厂构造函数还可以实现单例；
+
+l-144
