@@ -1848,4 +1848,27 @@ void main() {
 }
 ```
 
-l-144
+## lesson 147 Copying objects with 'copyWiith'
+
+- (often) better to create immutable classes with final variables
+- More `predictable` code: less mutable state in our apps
+- But how can we make a copy of an (immutable) object, and change some properties?
+
+```dart
+class Credentials {
+  const Credentials({this.email = '', this.password = ''});
+  final String email;
+  final String password;
+}
+
+void main() {
+  const credentials = Credentials(email: "123@123.com", password: "123123");
+  credentials.email = 'me@example.com'; // -> ❌
+  // 'email' can't be used as a setter because it's final.
+}
+```
+
+- 其实一旦给构造函数设置了 `const` 就是不允许搞它的意思
+- 然后再配置属性只 `getter，不``setter`，就可以保证类的属性仅在在实例的时候可以复制，但实力后就不能修改
+
+l-147 02:50
