@@ -1710,7 +1710,7 @@ void main() {
   - Composition and inheritance used heavily
   - 在 `Flutter SDK` 里 **`组合与继承`** 应用的很严重
 
-**Composition & inheritance are important**
+Composition & inheritance are important
 
 - Composition <-> `has-a` relationships
 - Inheritance <-> `is-a` relationships
@@ -1733,5 +1733,119 @@ Factory constructors - 工厂构造函数
   - Initialize a final variable using logic that can't be handled in the initializer list
 
 > 工厂构造函数不需要每次构建新的实例，且不会自动生成实例,而是通过代码来决定返回的实例对象；工厂构造函数类似于 static 静态成员，无法访问 this 指针；一般需要依赖其他类型构造函数；工厂构造函数还可以实现单例；
+>
+> lesson 145 好多笔记没理解
+
+- 太抽象了，不如直接理解工程构成函数可以生产出很多各种各样的实例！
+- 你可以从汽车工厂，生产出A5、325、c260l等车子的实例
+
+```dart
+import 'dart:math';
+
+abstract class Shape {
+  double get area;
+  const Shape();
+
+  // 这里最好写Object，比写 dynamic 好
+  // 两种写法，factory 很学术，但 staic 更好理解
+  // factory Shape.fromJson(Map<String, Object> json) {
+  static Shape fromJson(Map<String, Object> json) {
+    final type = json['type'];
+
+    switch (type) {
+      case 'square':
+        final side = json['side'];
+        if (side is double) {
+          return Square(side);
+        }
+        throw UnsupportedError('invalid or missing side property');
+      case 'circle':
+        final radius = json['radius'];
+        if (radius is double) {
+          return Square(radius);
+        }
+        throw UnsupportedError('invalid or missing side property');
+      default:
+        throw UnimplementedError('shape $type not recognized');
+    }
+  }
+}
+
+class Square extends Shape {
+  Square(this.side);
+
+  final double side;
+
+  @override
+  double get area => side * side;
+}
+
+class Circle extends Shape {
+  Circle(this.radius);
+  final double radius;
+
+  @override
+  double get area => pi * radius * radius;
+}
+
+void printArea(Shape shape) {
+  print(shape.area);
+}
+
+void main() {
+  final shapesJson = [
+    {"type": "square", "side": 10.0},
+    {"type": "circle", "radius": 5.0},
+    {"type": "triangle"}
+  ];
+
+  try {
+    final shapes = shapesJson.map((shapeJson) => Shape.fromJson(shapeJson));
+    print(shapes);
+    shapes.forEach(printArea);
+  } catch (e) {
+    print(e);
+  }
+}
+```
+
+- JSON best practices
+  - check all edge cases
+  - throw an error if the input data is invalid
+
+## lesson 146 Exercise: JSON Serialization
+
+```dart
+class Person {
+  Person({required this.name, required this.age});
+  final String name;
+  final int age;
+
+  factory Person.fromJson(Map<String, Object> json) {
+    final name = json['name'];
+    final age = json['age'];
+
+    if (name is String && age is int) {
+      return Person(name: name, age: age);
+    }
+
+    throw StateError('Could not read name or age');
+  }
+
+  Map<String, Object> toJson() => {
+        'name': name,
+        'age': age,
+      };
+}
+
+void main() {
+  final person = Person.fromJson({
+    'name': 'Jerry',
+    'age': 18, // 如果是字符串，会抛异常
+  });
+  final json = person.toJson();
+  print(json);
+}
+```
 
 l-144

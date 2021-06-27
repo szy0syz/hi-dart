@@ -18,4 +18,6 @@ void main() {
   final button =
       Button(child: Text('Hello'), onPressed: () => print('button pressed!'));
   // Button: Scalable approach, Use composition to create complex UIs
+
+  print(button);
 }

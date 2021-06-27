@@ -2,6 +2,31 @@ import 'dart:math';
 
 abstract class Shape {
   double get area;
+  const Shape();
+
+  // 这里最好写Object，比写 dynamic 好
+  // 两种写法，factory 很学术，但 staic 更好理解
+  // factory Shape.fromJson(Map<String, Object> json) {
+  static Shape fromJson(Map<String, Object> json) {
+    final type = json['type'];
+
+    switch (type) {
+      case 'square':
+        final side = json['side'];
+        if (side is double) {
+          return Square(side);
+        }
+        throw UnsupportedError('invalid or missing side property');
+      case 'circle':
+        final radius = json['radius'];
+        if (radius is double) {
+          return Square(radius);
+        }
+        throw UnsupportedError('invalid or missing side property');
+      default:
+        throw UnimplementedError('shape $type not recognized');
+    }
+  }
 }
 
 class Square extends Shape {
@@ -26,20 +51,17 @@ void printArea(Shape shape) {
 }
 
 void main() {
-  // 注意：父类可以接替子类的位置 -> 站岗
-  final Shape shape = Square(10);
-  print(shape.area);
-
-  final Shape circel = Circle(5);
-  print(circel.area);
-
-  // 要开始了
-  final shapes = [
-    Square(2),
-    Circle(3)
+  final shapesJson = [
+    {"type": "square", "side": 10.0},
+    {"type": "circle", "radius": 5.0},
+    {"type": "triangle"}
   ];
 
-  print('----------');
-
-  shapes.forEach(printArea);
+  try {
+    final shapes = shapesJson.map((shapeJson) => Shape.fromJson(shapeJson));
+    print(shapes);
+    shapes.forEach(printArea);
+  } catch (e) {
+    print(e);
+  }
 }
