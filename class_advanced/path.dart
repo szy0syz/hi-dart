@@ -15,9 +15,11 @@ class ClosedPath {
 void main() {
   // square shape
   final path = ClosedPath()
-    ?..moteTo(Point(0, 0))
+    ..moteTo(Point(0, 0))
     ..lineTo(Point(2, 0))
     ..lineTo(Point(2, 2))
     ..lineTo(Point(0, 2))
     ..lineTo(Point(0, 0));
+
+  print(path);
 }
