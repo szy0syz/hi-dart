@@ -5,6 +5,7 @@ class Item {
   final Product product;
   final int quantity;
 
+  // 相当于一个计算属性，没有实际存在，但你实例化后的实例就是有
   double get price => quantity * product.price;
 
   @override

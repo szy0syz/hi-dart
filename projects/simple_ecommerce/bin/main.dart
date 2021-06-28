@@ -47,6 +47,7 @@ void main() {
   }
 }
 
+// 因为所选商品有可能有空嘛，所以加个？
 Product? chooseProduct() {
   final productsList =
       allProducts.map((product) => product.displayName).join('\n');

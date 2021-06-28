@@ -1909,10 +1909,73 @@ void main() {
 }
 ```
 
-## lesson 149 Simple eCommerce store: Overview
+## eCommerce store
 
 eCommerce: Entities
 
 ![010](assets/10.png)
 
-l-147 02:50
+## lesson 155 Mixins & Extensions
+
+> extend the functionality of existing types/classes
+
+Mixins (`组合`，不应该直译为混合)
+
+- Dart classes can extend `only one class`
+- 在 Dart 中的类，一次只能继承另一个类
+- Mixins solve this problem -> add functionality and reuse code in your classes
+- 组合却能解决这个问题 -> 它可以给你的类提供复用代码的功能
+
+Extensions
+
+- Add functionality to existing classes, `without modifying them`
+- 继承是用来给已存在的类添加新功能，但却不改变原来的类
+- Great when extending classes in the Dart/Flutter SDK or 3rd party libraries
+- 在使用 SDK时 我们应该多用继承
+
+## lesson 156 Creating and using mixins
+
+- mixins 和 extends 其实就是解决代码复用时 “一个基类并非大而全的问题”
+- 例如：动物、鱼类和人类，并非所有动物都会游泳，
+- 所以我们把 游泳 做一个 mixin 来用，而不是直接放在 动物的基类上
+- 但所有动物都要 “呼吸”，所以我们把 呼吸 可以放在动物的基类上
+- 所以呢，我们把能继承的都继承，不能继承的就组合，最大程度复用代码！
+
+```dart
+mixin Swimming {
+  void swim() => print('swimming');
+}
+
+class Animal {
+  void breath() => print('breathing');
+}
+
+class Fish extends Animal with Swimming {}
+
+class Human extends Animal with Swimming {}
+
+void main() {
+  final fish = Fish();
+  fish.swim();
+  final human = Human();
+  human.swim();
+}
+```
+
+- Mixins are good for defining behaviors (or capabilities)
+- 使用组合定义一些特俗的行为或能力是比较合适的
+- Classes can inherit those behaviors in a more maintainable way
+- 类所继承的那些行为，都应该是以一种可维护的方式
+- 类继承的行为应该都是 “统一行动的”，一动则百动！
+- Mixins lead to shallow class hierarchies (this is good thing)
+- 组合引导了一种浅继承类的方式
+- Single inheritance (extends) leads to `deep` class hierarchies
+- 单一层级的继承链会导致类的继承层级嵌套过深的问题
+  - making the code harder to maintain
+  - 这回导致代码越来越难维护的问题
+- In Dart, any class can be added as a mixin to another class (using the `with` keyword)
+- 在dart里，任何类都可以被 `mixin` 关键字 组合给其他的类，这个好用！
+- 到底需不需要用 `mixin` 来修饰，看这个类有可能被单独实例化吗
+- 如果没有就用 `mixin`
+
+l-159 0

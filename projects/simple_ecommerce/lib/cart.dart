@@ -2,6 +2,7 @@ import 'item.dart';
 import 'product.dart';
 
 class Cart {
+  // 私有的
   final Map<int, Item> _items = {};
 
   void addProduct(Product product) {
