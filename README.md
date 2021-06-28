@@ -1872,5 +1872,47 @@ void main() {
 - 然后再配置属性只 `getter，不``setter`，就可以保证类的属性仅在在实例的时候可以复制，但实力后就不能修改
 - Best Practice
 - if you need copy-behaviour in your immutable classes, create a copyWith method
+- 为啥子？因为默认类是不带 copyWith 方法的。
+- 所以你想要在不改变你原来的情况下复制一个值相同的类，还是自己写 `copyWith` 方法
+- copyWith is `convenient`
+- set the properities that you want, omit the others (via named arguments)
+- copyWith 函数一定要做可选参数的实参，没有的就按原来的复制呗，而且一定带名称的参数传递
+- 说是 flutter 大量使用这个模式
+
+## lesson 148 The cascade operator
+
+![009](assets/09.png)
+
+```dart
+import 'dart:math';
+
+class ClosedPath {
+  List<Point> _points = [];
+
+  void moteTo(Point point) {
+    _points = [point];
+  }
+
+  void lineTo(Point point) {
+    _points.add(point);
+  }
+}
+
+void main() {
+  // square shape
+  final path = ClosedPath()
+    ?..moteTo(Point(0, 0))
+    ..lineTo(Point(2, 0))
+    ..lineTo(Point(2, 2))
+    ..lineTo(Point(0, 2))
+    ..lineTo(Point(0, 0));
+}
+```
+
+## lesson 149 Simple eCommerce store: Overview
+
+eCommerce: Entities
+
+![010](assets/10.png)
 
 l-147 02:50

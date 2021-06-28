@@ -12,6 +12,12 @@ class Credentials {
   String toString() => 'Credentials($email, $password)';
 }
 
+class Person {
+  Person(this.name);
+
+  final String name;
+}
+
 void main() {
   const credentials = Credentials(email: "123@123.com", password: "123123");
   // credentials.email = 'me@example.com';
