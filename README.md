@@ -1440,14 +1440,14 @@ class Subclass implements Base {  // -> ❌
 }
 ```
 
-## lesson 138  The base 'Object' class
+## lesson 138 The base 'Object' class
 
 > 竟然和 `JS` 差不多
 
 ![006](assets/06.png)
 
 - Object is the root of the Dart **class hierachy**
-- 一样地，Dart的类也是一个树形节点， Object 类是 root node
+- 一样地，Dart 的类也是一个树形节点， Object 类是 root node
 
 > 搞了半天，终于顿悟抽象类的厉害之处。
 
@@ -1543,7 +1543,7 @@ void main() {
 - 我们可以使用 `covariant` 在重写方法中的函数的实参，本来要用 Object 的，但我们辅助我们
 - 减少了判断变量类型的步骤，浮云了，语法糖！！！
 
-## lesson 141 Exercise: Implement the + and * operators
+## lesson 141 Exercise: Implement the + and \* operators
 
 ```dart
 class Point {
@@ -1717,7 +1717,7 @@ Composition & inheritance are important
 
 > 太有深度了 👍 👍 👍
 >
-> 从140开始越来越有深度了
+> 从 140 开始越来越有深度了
 
 ## lesson 145 Factory constructors and reading JSON data
 
@@ -1737,7 +1737,7 @@ Factory constructors - 工厂构造函数
 > lesson 145 好多笔记没理解
 
 - 太抽象了，不如直接理解工程构成函数可以生产出很多各种各样的实例！
-- 你可以从汽车工厂，生产出A5、325、c260l等车子的实例
+- 你可以从汽车工厂，生产出 A5、325、c260l 等车子的实例
 
 ```dart
 import 'dart:math';
@@ -1869,7 +1869,7 @@ void main() {
 ```
 
 - 其实一旦给构造函数设置了 `const` 就是不允许搞它的意思
-- 然后再配置属性只 `getter，不``setter`，就可以保证类的属性仅在在实例的时候可以复制，但实力后就不能修改
+- 然后再配置属性只 ` getter，不``setter `，就可以保证类的属性仅在在实例的时候可以复制，但实力后就不能修改
 - Best Practice
 - if you need copy-behaviour in your immutable classes, create a copyWith method
 - 为啥子？因为默认类是不带 copyWith 方法的。
@@ -1931,7 +1931,7 @@ Extensions
 - Add functionality to existing classes, `without modifying them`
 - 继承是用来给已存在的类添加新功能，但却不改变原来的类
 - Great when extending classes in the Dart/Flutter SDK or 3rd party libraries
-- 在使用 SDK时 我们应该多用继承
+- 在使用 SDK 时 我们应该多用继承
 
 ## lesson 156 Creating and using mixins
 
@@ -1974,8 +1974,78 @@ void main() {
   - making the code harder to maintain
   - 这回导致代码越来越难维护的问题
 - In Dart, any class can be added as a mixin to another class (using the `with` keyword)
-- 在dart里，任何类都可以被 `mixin` 关键字 组合给其他的类，这个好用！
+- 在 dart 里，任何类都可以被 `mixin` 关键字 组合给其他的类，这个好用！
 - 到底需不需要用 `mixin` 来修饰，看这个类有可能被单独实例化吗
 - 如果没有就用 `mixin`
 
-l-159 0
+l-159 0 l165
+
+## Async programming
+
+Most applications need this:
+
+- Fetching data from the network
+- Writeing to a database
+- Reading data from file
+
+You apps needs to be `responsive` while wating for async operations to complete
+
+- In Dart this is done with `Feture`, `async` & `await`
+- Streams: asynchronous events delivered over time
+  - Often use in reactive applications (Flutter & other declarative frameworks)
+
+## Future
+
+![009](assets/11.png)
+
+```dart
+Future<String> fetchUserOrder() => Future.delayed(
+      Duration(seconds: 2),
+      //  () => "~Cafe~"
+      () => throw Exception('Out of mile'),
+    );
+
+void main() async {
+  print('Program started');
+  fetchUserOrder()
+      .then((value) => print(value))
+      .catchError((error) => print(error))
+      .whenComplete(() => print('Done'));
+
+  // -> Unhandled exception
+  try {
+    final order = await fetchUserOrder();
+    print(order);
+  } catch (e) {
+    print(e);
+  } finally {
+    print('~Done~');
+  }
+}
+```
+
+- Use await to wait until a Future completes
+- Use Multiple awaits to run Futures in sequence
+- await is only allowed inside async functions
+- use `try/catch` to handle exceptions
+
+> `async/await` + `try/catch` is a great way of working with Futures in Dart 👍
+
+- Futrue.delayed
+- Future.error
+- Future.value
+- Future.sync
+- Future.microtask
+
+```dart
+Future<void> countDown(int n) async {
+  for (var i = 0; i < n; i++) {
+    await Future.delayed(Duration(seconds: 1), () => print(i));
+  }
+}
+
+Future<void> main() async {
+  await countDown(5);
+  print("Done");
+}
+```
