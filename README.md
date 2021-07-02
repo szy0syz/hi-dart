@@ -2121,3 +2121,69 @@ Future<int> sumStream2(Stream<int> stream) =>
 
 - Same as Iterable.reduce
 - Stream.reduce waits for each event to become available before calling the combine function
+
+- We can use Stream generators to emit `multiple value` over time inside a function
+- 我们可以在一个函数内用 Stream generators 在未来的时间里来获取多个异步值
+
+```dart
+Future<int> sumStream(Stream<int> stream) async {
+  var sum = 0;
+  await for (var value in stream) {
+    sum += value;
+  }
+  return sum;
+}
+
+Future<int> sumStream2(Stream<int> stream) =>
+    stream.reduce((previous, element) => previous + element);
+
+Stream<int> countStream(int n) async* {
+  for (var i = 0; i < n; i++) {
+    // 这里可以加各种异步
+    // await Future.delayed(Duration(seconds: 1));
+    // print(i);
+    // 我们可以在一个函数内用 Stream generators 在未来的时间里来获取多个异步值
+    yield i;
+  }
+}
+
+Iterable<int> count(n) sync* {
+  for (var i = 0; i < n; i++) {
+    yield i;
+  }
+}
+
+void main() async {
+  final stream = Stream<int>.fromIterable([1, 2, 3, 4, 5]);
+  final sum = await sumStream(stream);
+  print("Sum: $sum");
+
+  // -----
+  final stream2 = countStream(6); // 0+1+2+3+4+5
+  final sum2 = await sumStream(stream2);
+  print(sum2);
+}
+```
+
+Iterable and Stream are very similar
+
+- They can be iterated over with a for loop
+- 它俩都能被在循环里被迭代
+- They can be created with genertor functions
+- 它俩都能被 生成器函数 创建
+- They share many methods to process and modify items
+- 它俩有着很多相同的方法
+
+> But `Iterables` are `synchronous`, and `Stream` are `asynchronous`
+>
+> 关键点是 `迭代器` 一定是同步的 `sync*`，但是 `流` 一定是异步的
+
+```dart
+Iterable<int> count(n) sync* {
+  for (var i = 0; i < n; i++) {
+    // *
+    // await Future.delayed(Duration(seconds: 1));
+    yield i;
+  }
+}
+```
