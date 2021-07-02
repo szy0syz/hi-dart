@@ -1978,7 +1978,7 @@ void main() {
 - 到底需不需要用 `mixin` 来修饰，看这个类有可能被单独实例化吗
 - 如果没有就用 `mixin`
 
-l-159 0 l165
+> 💥 l-159 0 l165
 
 ## Async programming
 
@@ -1996,7 +1996,7 @@ You apps needs to be `responsive` while wating for async operations to complete
 
 ## Future
 
-![009](assets/11.png)
+![11](assets/11.png)
 
 ```dart
 Future<String> fetchUserOrder() => Future.delayed(
@@ -2038,6 +2038,38 @@ void main() async {
 - Future.microtask
 
 ```dart
+Future<String> fetchUserOrder() =>
+    Future.delayed(Duration(seconds: 2), () => "~Cafe~"
+        // () => throw Exception('Out of mile'),
+        );
+
+Future<String> fetchUserOrder2() => Future.value('Jerry');
+
+Future<String> fetchUserOrder3() => Future.error(Exception("Out of mile"));
+
+void main() async {
+  print('Program started');
+  fetchUserOrder()
+      .then((value) => print(value))
+      .catchError((error) => print(error))
+      .whenComplete(() => print('Done'));
+
+  // -> Unhandled exception
+  try {
+    final order = await fetchUserOrder();
+    print(order);
+
+    final order2 = await fetchUserOrder2();
+    print(order2);
+  } catch (e) {
+    print(e);
+  } finally {
+    print('~Done~');
+  }
+}
+```
+
+```dart
 Future<void> countDown(int n) async {
   for (var i = 0; i < n; i++) {
     await Future.delayed(Duration(seconds: 1), () => print(i));
@@ -2049,3 +2081,43 @@ Future<void> main() async {
   print("Done");
 }
 ```
+
+## Stream
+
+> **asynchronous Iterable** 核心就是异步迭代
+
+![12](assets/12.png)
+
+大概玩耍 Stream 的流程如下：
+
+- Stream.fromIterable
+- Stream geterator (astnc*, yield)
+- StreamController
+
+普通青年玩 `Stream`
+
+```dart
+Future<int> sumStream(Stream<int> stream) async {
+  var sum = 0;
+  await for (var value in stream) {
+    sum += value;
+  }
+  return sum;
+}
+
+void main() async{
+  final stream = Stream<int>.fromIterable([1,2,3,4,5]);
+  final sum = await sumStream(stream);
+  print("Sum: $sum");
+}
+```
+
+高端青年玩 `Stream`
+
+```dart
+Future<int> sumStream2(Stream<int> stream) =>
+    stream.reduce((previous, element) => previous + element);
+```
+
+- Same as Iterable.reduce
+- Stream.reduce waits for each event to become available before calling the combine function
