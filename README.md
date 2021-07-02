@@ -2187,3 +2187,46 @@ Iterable<int> count(n) sync* {
   }
 }
 ```
+
+## lesson 173 Exercise: Fizz Buzz with streams
+
+```dart
+Stream<String> asyncFizzBuzz() async* {
+  for (var i = 1; i <= 15; i++) {
+    await Future.delayed(Duration(milliseconds: 400));
+    if (i % 3 == 0 && i % 5 == 0) {
+      yield 'fizz buzz';
+    } else if (i % 3 == 0) {
+      yield 'fizz';
+    } else if (i % 5 == 0) {
+      yield 'buzz';
+    } else {
+      yield '$i';
+    }
+  }
+}
+
+Future<void> main() async{
+  final stream = asyncFizzBuzz();
+  await for (var value in stream) {
+    print(value);
+  }
+}
+```
+
+## lesson 174 Stream Constructors
+
+- Stream.fromIterable
+- Stream.value
+- Stream.error
+- Stream.empty
+- Stream.fromFuture
+- Stream.periodic
+
+[https://dart.dev/tutorials/language/streams](https://dart.dev/tutorials/language/streams)
+
+- Streams 提供的事一些异步数据序列
+- 这些数据序列包含了由用户产生的时间和读取文件的数据
+- 你可以处理这个 `stream` 使用 `await-for` 或者 `listen()`
+- stream 还提供相应错误的处理方式
+- 目前 `dart` 里有两种流：`single subscription or broadcast`
