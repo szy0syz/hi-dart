@@ -2230,3 +2230,13 @@ Future<void> main() async{
 - 你可以处理这个 `stream` 使用 `await-for` 或者 `listen()`
 - stream 还提供相应错误的处理方式
 - 目前 `dart` 里有两种流：`single subscription or broadcast`
+
+## lesson 184 Error Handling
+
+- is `not` to write code that **"kinda works"**
+- is to write code that `never fails`
+- or at least, try to consider all possible failure cases
+- add robust error handing 稳固的错误处理机制
+- add `automated` tests
+
+> END
